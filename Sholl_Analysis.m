@@ -27,7 +27,7 @@ Graphs / excel file / data saved as desired (TBD as of 12/7/22)
 Using estimates from Oberheim paper: https://pubmed.ncbi.nlm.nih.gov/19279265/ 
 Protoplasmic astrocytes ~ 60um diameter, with 4-6 main processes 
                             (more cortical)
-Fibrous astrocytes ~ 80um diamer
+Fibrous astrocytes ~ 80um diameter
                             (more in W matter, hippocampal)
 
 Script is designed to work with 20 mice, will need to update any instances
@@ -41,7 +41,7 @@ likely need to update excel file and "scale" variable in the code
 %% Code starts here: Load in excel file, organize data into cell array
 
 % Scale here refers to size of steps between concentric sholl rings
-% (diameter of sholl ring)
+% (radius of sholl ring)
 stepSize = 2; %Steps in px used in sholl analysis
 scale = (0.09655)* stepSize; %Scale is correct .09655 px/um 
 
@@ -183,6 +183,7 @@ end
 
 %% Make a histogram for each group based on furthest distance
 binsHist1 = (0:5:100); % need to adjust if change scale, binning in um 
+
 histDiamSal = histc(diamTogetherScale(grpTogSal),binsHist1);
 histDiamGlu = histc(diamTogetherScale(grpTogGlu),binsHist1);
 
@@ -194,6 +195,8 @@ bar(histDiamSal,'b')
 ylim([0 25])
 ylabel('Number of Astrocytes')
 xlabel('Furthest Process(um)')
+xticks([1:4:21]);
+xticklabels(binsHist1(1:4:21));
 
 subplot(2,1,2)
 bar(histDiamGlu,'r')
@@ -202,7 +205,8 @@ bar(histDiamGlu,'r')
 ylim([0 25])   
 ylabel('Number of Astrocytes')
 xlabel('Furthest Process(um)')
-    
+xticks([1:4:21]);
+xticklabels(binsHist1(1:4:21));
 %% Plot sholl curves (number of intersections)
 %{ 
 Going to use shollRaw (with NaN instead of 0 values), this will allow
